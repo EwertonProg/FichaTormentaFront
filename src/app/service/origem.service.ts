@@ -1,28 +1,30 @@
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {Injectable} from "@angular/core";
 import {Origem} from "../entity/Origem";
+import {environment} from "../../environments/environment";
 
-@Injectable({providedIn:'root'})
+@Injectable({providedIn: 'root'})
 export class OrigemService {
-  endpoint = 'http://192.168.0.102:8080/origem/';
+  endpoint = environment.apiUrl + '/origem/';
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json'
+      'Content-Type': 'application/json'
     })
   };
 
-  constructor(private http: HttpClient) { }
-
-  public getAll():Observable<Origem[]>{
-    return this.http.get<Origem[]>(this.endpoint+'all').pipe()
+  constructor(private http: HttpClient) {
   }
 
-  public findById(id:number):Observable<Origem>{
-    return this.http.get<Origem>(this.endpoint+id).pipe()
+  public getAll(): Observable<Origem[]> {
+    return this.http.get<Origem[]>(this.endpoint + 'all').pipe()
   }
 
-  public save(origem:Origem){
+  public findById(id: number): Observable<Origem> {
+    return this.http.get<Origem>(this.endpoint + id).pipe()
+  }
+
+  public save(origem: Origem) {
     this.http.post<Origem>(this.endpoint, origem);
   }
 }

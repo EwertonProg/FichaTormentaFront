@@ -3,7 +3,8 @@ import {TalentoService} from "../../../service/talento.service";
 import {Talento} from "../../../entity/Talento";
 import {FormControl, FormGroup} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
+import {SampleService} from "../../../service/sample.service";
 
 @Component({
   selector: 'talento-consulta',
@@ -16,7 +17,9 @@ export class TalentoConsultaComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'grupoTalento', 'origem', 'acao'];
 
   constructor(private service: TalentoService,
-              private router: Router) {}
+              private router: Router,
+              private sampleService: SampleService) {
+  }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -37,16 +40,15 @@ export class TalentoConsultaComponent implements OnInit {
     });
   }
 
-  private irEditarTalento(idTalento: number){
+  private irEditarTalento(idTalento: number) {
     this.router.navigate(["/editar-talento", idTalento]);
   }
 
-  private irCadastrarTalento(){
+  private irCadastrarTalento() {
     this.router.navigate(["/cadastrar-talento"]);
   }
 
-  private irVizualizarTalento(idTalento: number){
+  private irVizualizarTalento(idTalento: number) {
     this.router.navigate(["/vizualizar-talento", idTalento]);
   }
-
 }

@@ -1,28 +1,30 @@
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {Injectable} from "@angular/core";
 import {GrupoTalento} from "../entity/GrupoTalento";
+import {environment} from "../../environments/environment";
 
-@Injectable({providedIn:'root'})
+@Injectable({providedIn: 'root'})
 export class GrupoTalentoService {
-  endpoint = 'http://192.168.0.102:8080/grupoTalento/';
+  endpoint = environment.apiUrl + '/grupoTalento/';
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json'
+      'Content-Type': 'application/json'
     })
   };
 
-  constructor(private http: HttpClient) { }
-
-  public getAll():Observable<GrupoTalento[]>{
-    return this.http.get<GrupoTalento[]>(this.endpoint+'all').pipe()
+  constructor(private http: HttpClient) {
   }
 
-  public findById(id:number):Observable<GrupoTalento>{
-    return this.http.get<GrupoTalento>(this.endpoint+id).pipe()
+  public getAll(): Observable<GrupoTalento[]> {
+    return this.http.get<GrupoTalento[]>(this.endpoint + 'all').pipe()
   }
 
-  public save(grupoTalento:GrupoTalento){
+  public findById(id: number): Observable<GrupoTalento> {
+    return this.http.get<GrupoTalento>(this.endpoint + id).pipe()
+  }
+
+  public save(grupoTalento: GrupoTalento) {
     this.http.post<GrupoTalento>(this.endpoint, grupoTalento);
   }
 }

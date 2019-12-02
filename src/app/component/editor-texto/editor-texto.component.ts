@@ -2,20 +2,20 @@ import {Component, Input, OnInit} from '@angular/core';
 import 'quill-mention'
 import {TalentoService} from "../../service/talento.service";
 import {isNullOrUndefined} from "util";
-export const link = 'http://localhost:4200/editar-talento/';
+import {SampleService} from "../../service/sample.service";
+
 @Component({
   selector: 'app-editor-texto',
   templateUrl: './editor-texto.component.html',
   styleUrls: ['./editor-texto.component.css']
 })
 export class EditorTextoComponent implements OnInit {
+  static talentosMentio: mentionDto[];
+  private static urlOrigin: string;
   @Input() label: string;
   @Input() readOnly: boolean;
   @Input() required: boolean;
   texto: string = '';
-
- static atValues: mentionDto[];
-
   configEditor = {
     toolbar: {
       container: [
@@ -36,7 +36,7 @@ export class EditorTextoComponent implements OnInit {
       source: (searchTerm, renderList) => {
         let values;
 
-          values = EditorTextoComponent.atValues;
+        values = EditorTextoComponent.talentosMentio;
 
         if (searchTerm.length === 0) {
           renderList(values, searchTerm);
@@ -50,18 +50,25 @@ export class EditorTextoComponent implements OnInit {
     },
   };
 
-  constructor(private talentoService: TalentoService) {
+  constructor(private talentoService: TalentoService,
+              private sampleService: SampleService) {
   }
 
   ngOnInit() {
-    if(isNullOrUndefined(EditorTextoComponent.atValues)){
-      EditorTextoComponent.atValues = [];
-      this.talentoService.getAll().subscribe(talentos => talentos.forEach(talento => EditorTextoComponent.atValues.push(new mentionDto(talento.nome, link+talento.id))));
+    if (isNullOrUndefined(EditorTextoComponent.talentosMentio)) {
+      EditorTextoComponent.urlOrigin = this.sampleService.getOrigin() + /editar-talento/;
+    }
+    if (isNullOrUndefined(EditorTextoComponent.talentosMentio)) {
+      EditorTextoComponent.talentosMentio = [];
+      this.talentoService.getAll().subscribe(
+        talentos => talentos.forEach(
+          talento => EditorTextoComponent.talentosMentio.push(new mentionDto(talento.nome, EditorTextoComponent.urlOrigin + talento.id))));
     }
   }
 
 }
 
-export class mentionDto{
-  constructor(public value, public link){}
+export class mentionDto {
+  constructor(public value, public link) {
+  }
 }
