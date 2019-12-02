@@ -1,0 +1,14 @@
+<div style="margin-bottom: 3%">
+  <mat-card-title><h5>{{label}}</h5></mat-card-title>
+  <quill-editor
+    [(ngModel)]="texto"
+    [modules]="configEditor"
+    [readOnly]="readOnly"
+    [required]="required"
+    placeholder="Adicione o Texto...">
+  </quill-editor>
+</div>
+
+<!--<div>-->
+<!--  <pre>{{htmlText}}</pre>-->
+<!--</div>-->

@@ -1,0 +1,73 @@
+<div class="container">
+  <mat-card-header>
+    <mat-card-title *ngIf="!edicao" class="margin-header"><h3>Cadastrar Talento</h3>
+    </mat-card-title>
+    <mat-card-title *ngIf="edicao" class="margin-header"><h3>Editar Talento</h3></mat-card-title>
+  </mat-card-header>
+  <mat-card class="mat-card">
+    <form (ngSubmit)="salvarTalento()" [formGroup]="form">
+      <div class="row">
+        <mat-form-field class="col-md-12">
+          <input formControlName="nome" matInput placeholder="Nome" required>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="col-md-6">
+          <mat-select formControlName="grupoTalento" placeholder="Grupo de Talento" required>
+            <div *ngFor="let grupo of gruposTalento">
+              <mat-option (onSelectionChange)="selecionarGrupoTalento(grupo)"
+                          [value]="grupo.id">{{grupo.nome}}</mat-option>
+            </div>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-4">
+          <mat-select formControlName="origem" placeholder="Origem do Talento" required>
+            <div *ngFor="let origem of origens">
+              <mat-option (onSelectionChange)="selecionarOrigem(origem)"
+                          [value]="origem.id">{{origem.nome}}</mat-option>
+            </div>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-2">
+          <input formControlName="numPagOrigem" matInput placeholder="Nº Pagina">
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="col-md-12">
+          <textarea formControlName="descricao" matInput placeholder="Descrição"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <app-editor-texto #preRequisitoTexto [label]="'Pre-Requisito'" [readOnly]="false"
+                            [required]="false"></app-editor-texto>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <app-editor-texto #beneficioTexto [label]="'Beneficio'" [readOnly]="false"
+                            [required]="true"></app-editor-texto>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 ">
+          <app-editor-texto #especialTexto [label]="'Especial'" [readOnly]="false"
+                            [required]="false"></app-editor-texto>
+        </div>
+      </div>
+
+      <div class="row col-md-12">
+        <button class="col-md-2" mat-flat-button *ngIf="!edicao">Salvar</button>
+        <button class="col-md-2" mat-flat-button *ngIf="edicao">Editar</button>
+      </div>
+
+    </form>
+  </mat-card>
+</div>

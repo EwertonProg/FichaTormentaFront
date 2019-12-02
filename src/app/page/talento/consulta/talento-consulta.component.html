@@ -1,0 +1,56 @@
+<div class="container">
+  <mat-card class="mat-card">
+    <form (ngSubmit)="buscar()" [formGroup]="form">
+      <div class="col-md-12">
+        <mat-form-field class="col-md-4">
+          <input formControlName="inputNome" matInput placeholder="Nome" type="text">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input formControlName="inputOrigem" matInput placeholder="Origem" type="text">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input formControlName="inputGrupoTalento" matInput placeholder="Grupo de Talento" type="text">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-12">
+        <button class="col-md-5" mat-button>Buscar</button>
+        <button (click)="irCadastrarTalento()" class="col-md-5" mat-button type="button">Adicionar</button>
+        <button class="col-md-2" mat-button type="button">Limpar</button>
+      </div>
+    </form>
+  </mat-card>
+
+  <mat-card class="mat-card col-md-12 ">
+    <table [dataSource]="talentos" class="mat-elevation-z8" mat-table style="width: 100%">
+      <ng-container matColumnDef="nome">
+        <th *matHeaderCellDef class="text-aling-center" mat-header-cell>Nome</th>
+        <td *matCellDef="let talento" class="text-aling-center" mat-cell> {{talento.nome}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="grupoTalento">
+        <th *matHeaderCellDef class="text-aling-center" mat-header-cell>Grupo de Talento</th>
+        <td *matCellDef="let talento" class="text-aling-center" mat-cell> {{talento.grupoTalento.nome}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="origem">
+        <th *matHeaderCellDef class="text-aling-center" mat-header-cell>Origem</th>
+        <td *matCellDef="let talento" class="text-aling-center" mat-cell> {{talento.origem.nome}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acao">
+        <th *matHeaderCellDef class="text-aling-center" mat-header-cell>Ações</th>
+        <td *matCellDef="let talento" class="text-aling-center" mat-cell>
+          <button style="background: rgba(0,0,0,0.0)" (click)="irEditarTalento(talento.id)" mat-flat-button type="button">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button style="background: rgba(0,0,0,0.0)" (click)="irVizualizarTalento(talento.id)" mat-flat-button type="button">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+  </mat-card>
+</div>

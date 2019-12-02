@@ -44,3 +44,27 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+.gradle
+/build/
+/out/
+!gradle/wrapper/gradle-wrapper.jar
+/bin/
+
+### CLASS ###
+*.class
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
