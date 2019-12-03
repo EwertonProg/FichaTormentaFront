@@ -8,6 +8,6 @@ export class SampleService {
   }
 
   getOrigin(): string {
-    return this.window.location.origin;
+    return this.window.location.origin+'/#';
   }
 }
