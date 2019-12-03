@@ -4,6 +4,7 @@ threadsafe: yes
 
 env_variables:
   API_KEY: AIzaSyBGhewxp9XdJWlow8e9ni2hQdHNeoXzHIE
+  environment: "--prod"
 
 handlers:
   - url: /
