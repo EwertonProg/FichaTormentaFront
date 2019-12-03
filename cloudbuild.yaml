@@ -6,7 +6,7 @@ steps:
 
   # Build productive files
   - name: 'gcr.io/cloud-builders/npm@sha256:0a394b3eee214edf02171501e7e390596f91bb4bcf99a512225cee6fbc6381e2'
-    args: [ 'run', 'build', '--prod', '--crossOrigin=anonymous' ]
+    args: [ 'run', 'build', '--prod' ]
 
   # Deploy to google cloud app egnine
   - name: 'gcr.io/cloud-builders/gcloud'
