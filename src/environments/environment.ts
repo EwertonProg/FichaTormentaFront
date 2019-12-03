@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://192.168.0.102:8080"
+  apiUrl: "https://radiant-depths-67651.herokuapp.com"
 };
 /*
  * For easier debugging in development mode, you can import the following file
