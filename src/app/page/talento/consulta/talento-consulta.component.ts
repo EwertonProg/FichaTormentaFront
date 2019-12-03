@@ -26,29 +26,29 @@ export class TalentoConsultaComponent implements OnInit {
     // this.service.getAll().subscribe(retorno => this.talentos.data = retorno)
   }
 
+  buscar() {
+    this.service.getAll().subscribe(value => {
+      this.talentos.data = value;
+    });
+  }
+
+  irEditarTalento(idTalento: number) {
+    this.router.navigate(["/editar-talento", idTalento]);
+  }
+
+  irCadastrarTalento() {
+    this.router.navigate(["/cadastrar-talento"]);
+  }
+
+  irVizualizarTalento(idTalento: number) {
+    this.router.navigate(["/vizualizar-talento", idTalento]);
+  }
+
   private initializeForm() {
     this.form = new FormGroup({
       inputNome: new FormControl(''),
       inputOrigem: new FormControl(''),
       inputGrupoTalento: new FormControl('')
     })
-  }
-
-  private buscar() {
-    this.service.getAll().subscribe(value => {
-      this.talentos.data = value;
-    });
-  }
-
-  private irEditarTalento(idTalento: number) {
-    this.router.navigate(["/editar-talento", idTalento]);
-  }
-
-  private irCadastrarTalento() {
-    this.router.navigate(["/cadastrar-talento"]);
-  }
-
-  private irVizualizarTalento(idTalento: number) {
-    this.router.navigate(["/vizualizar-talento", idTalento]);
   }
 }

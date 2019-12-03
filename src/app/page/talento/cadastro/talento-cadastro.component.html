@@ -64,8 +64,8 @@
       </div>
 
       <div class="row col-md-12">
-        <button class="col-md-2" mat-flat-button *ngIf="!edicao">Salvar</button>
-        <button class="col-md-2" mat-flat-button *ngIf="edicao">Editar</button>
+        <button *ngIf="!edicao" class="col-md-2" mat-flat-button>Salvar</button>
+        <button *ngIf="edicao" class="col-md-2" mat-flat-button>Editar</button>
       </div>
 
     </form>

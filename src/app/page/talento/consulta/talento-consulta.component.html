@@ -41,10 +41,12 @@
       <ng-container matColumnDef="acao">
         <th *matHeaderCellDef class="text-aling-center" mat-header-cell>Ações</th>
         <td *matCellDef="let talento" class="text-aling-center" mat-cell>
-          <button style="background: rgba(0,0,0,0.0)" (click)="irEditarTalento(talento.id)" mat-flat-button type="button">
+          <button (click)="irEditarTalento(talento.id)" mat-flat-button style="background: rgba(0,0,0,0.0)"
+                  type="button">
             <mat-icon>edit</mat-icon>
           </button>
-          <button style="background: rgba(0,0,0,0.0)" (click)="irVizualizarTalento(talento.id)" mat-flat-button type="button">
+          <button (click)="irVizualizarTalento(talento.id)" mat-flat-button style="background: rgba(0,0,0,0.0)"
+                  type="button">
             <mat-icon>visibility</mat-icon>
           </button>
         </td>

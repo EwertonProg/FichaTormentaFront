@@ -10,6 +10,7 @@ import {EditorTextoComponent} from "../../../component/editor-texto/editor-texto
 import {ActivatedRoute} from "@angular/router";
 import {isNullOrUndefined} from "util";
 import {MatSnackBar} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'talento-cadastro',
   templateUrl: './talento-cadastro.component.html',
@@ -35,7 +36,7 @@ export class TalentoCadastroComponent implements OnInit {
               private grupoTalentoService: GrupoTalentoService,
               private origemService: OrigemService,
               private router: ActivatedRoute,
-              private dialog:MatSnackBar) {
+              private dialog: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -51,6 +52,26 @@ export class TalentoCadastroComponent implements OnInit {
       }
     });
 
+  }
+
+  salvarTalento() {
+    this.talento.nome = this.form.get('nome').value;
+    this.talento.descricao = this.form.get('descricao').value;
+    this.talento.beneficio = this.beneficioTexto.texto;
+    this.talento.especial = this.especialTexto.texto;
+    this.talento.preRequisito = this.preRequisitoTexto.texto;
+    this.service.save(this.talento).subscribe(value => {
+      this.dialog.open("Talento salvo com sucesso!!", "OK!");
+      this.carregarTalento(value);
+    });
+  }
+
+  selecionarOrigem(origem: Origem) {
+    this.talento.origem = origem;
+  }
+
+  selecionarGrupoTalento(grupo: GrupoTalento) {
+    this.talento.grupoTalento = grupo;
   }
 
   private carregarTalento(talento: Talento) {
@@ -77,18 +98,6 @@ export class TalentoCadastroComponent implements OnInit {
     })
   }
 
-  private salvarTalento() {
-    this.talento.nome = this.form.get('nome').value;
-    this.talento.descricao = this.form.get('descricao').value;
-    this.talento.beneficio = this.beneficioTexto.texto;
-    this.talento.especial = this.especialTexto.texto;
-    this.talento.preRequisito = this.preRequisitoTexto.texto;
-    this.service.save(this.talento).subscribe(value => {
-      this.dialog.open("Talento salvo com sucesso!!","OK!");
-      this.carregarTalento(value);
-    });
-  }
-
   private popularCombos() {
     this.popularGruposTalento();
     this.popularOrigens();
@@ -104,14 +113,6 @@ export class TalentoCadastroComponent implements OnInit {
     this.grupoTalentoService.getAll().subscribe(value => {
       this.gruposTalento = value
     })
-  }
-
-  private selecionarOrigem(origem: Origem) {
-    this.talento.origem = origem;
-  }
-
-  private selecionarGrupoTalento(grupo: GrupoTalento) {
-    this.talento.grupoTalento = grupo;
   }
 
 }
