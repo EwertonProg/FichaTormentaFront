@@ -15,7 +15,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatNativeDateModule,
-  MatSelectModule,
+  MatSelectModule, MatSidenavModule,
   MatSnackBar,
   MatSnackBarModule,
   MatTableModule,
@@ -28,6 +28,7 @@ import {QuillModule} from "ngx-quill";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {WINDOW_PROVIDERS} from "./window.providers";
 import {SampleService} from "./service/sample.service";
+import { TalentoViewerComponent } from './component/talento-viewer/talento-viewer.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {SampleService} from "./service/sample.service";
     AppComponent,
     TalentoConsultaComponent,
     TalentoCadastroComponent,
-    EditorTextoComponent
+    EditorTextoComponent,
+    TalentoViewerComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,8 @@ import {SampleService} from "./service/sample.service";
     QuillModule,
     QuillModule.forRoot(),
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSidenavModule
   ],
   providers: [MatSnackBar, WINDOW_PROVIDERS, SampleService, {
     provide: LocationStrategy,

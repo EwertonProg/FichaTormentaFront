@@ -2,9 +2,12 @@ import {Component, OnInit} from "@angular/core";
 import {TalentoService} from "../../../service/talento.service";
 import {Talento} from "../../../entity/Talento";
 import {FormControl, FormGroup} from "@angular/forms";
-import {MatTableDataSource} from "@angular/material";
 import {Router} from "@angular/router";
-import {SampleService} from "../../../service/sample.service";
+import {isNull, isNullOrUndefined} from "util";
+import {GrupoTalentoService} from "../../../service/grupo_talento.service";
+import {OrigemService} from "../../../service/origem.service";
+import {GrupoTalento} from "../../../entity/GrupoTalento";
+import {Origem} from "../../../entity/Origem";
 
 @Component({
   selector: 'talento-consulta',
@@ -12,24 +15,39 @@ import {SampleService} from "../../../service/sample.service";
   styleUrls: ['./talento-consulta.component.css']
 })
 export class TalentoConsultaComponent implements OnInit {
-  talentos: MatTableDataSource<Talento> = new MatTableDataSource();
+  talentos: Talento[] = [];
+  talentosFiltrados: Talento[] = [];
   form: FormGroup;
-  displayedColumns: string[] = ['nome', 'grupoTalento', 'origem', 'acao'];
+  gruposTalento: GrupoTalento[];
+  origens: Origem[];
 
   constructor(private service: TalentoService,
-              private router: Router,
-              private sampleService: SampleService) {
+              private grupoTalentoService: GrupoTalentoService,
+              private origemService: OrigemService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
     this.initializeForm();
-    // this.service.getAll().subscribe(retorno => this.talentos.data = retorno)
+    this.popularGruposTalento();
+    this.service.getAll().subscribe(retorno => {
+      this.talentos = retorno;
+      this.talentosFiltrados = retorno;
+    })
   }
 
-  buscar() {
-    this.service.getAll().subscribe(value => {
-      this.talentos.data = value;
-    });
+  filter() {
+    debugger;
+    this.talentosFiltrados = this.talentos;
+    const nome = this.getAtributeValue("inputNome");
+    if (!isNull(nome) && nome != "") {
+      this.talentosFiltrados = this.talentosFiltrados.filter(value => value.nome.toUpperCase().includes(nome.toUpperCase()))
+    }
+
+    const idGrupoTalento = this.getAtributeValue("inputGrupoTalento");
+    if (!isNull(idGrupoTalento) && idGrupoTalento != "") {
+      this.talentosFiltrados = this.talentosFiltrados.filter(value => value.grupoTalento.id == idGrupoTalento)
+    }
   }
 
   irEditarTalento(idTalento: number) {
@@ -44,6 +62,10 @@ export class TalentoConsultaComponent implements OnInit {
     this.router.navigate(["/vizualizar-talento", idTalento]);
   }
 
+  getAtributeValue(atributeValue: string) {
+    return isNullOrUndefined(this.form.get(atributeValue)) ? null : this.form.get(atributeValue).value
+  }
+
   private initializeForm() {
     this.form = new FormGroup({
       inputNome: new FormControl(''),
@@ -51,4 +73,18 @@ export class TalentoConsultaComponent implements OnInit {
       inputGrupoTalento: new FormControl('')
     })
   }
+
+
+  private popularOrigens() {
+    this.origemService.getAll().subscribe(value => {
+      this.origens = value
+    })
+  }
+
+  private popularGruposTalento() {
+    this.grupoTalentoService.getAll().subscribe(value => {
+      this.gruposTalento = value
+    })
+  }
+
 }

@@ -1,0 +1,13 @@
+<mat-card>
+  <div class="row">
+    <h3>{{talento.nome}}</h3>
+    <button (click)="irEditarTalento()" mat-flat-button style="background: rgba(0,0,0,0.0)"
+            type="button">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+  <div *ngIf="hasDescricao()" [innerHTML]="returnDescricao()"></div>
+  <div *ngIf="hasPreRequisito()" [innerHTML]="returnPreRequisito()"></div>
+  <div [innerHTML]="returnBeneficio()"></div>
+  <div *ngIf="hasEspecial()" [innerHTML]="returnEspecial()"></div>
+</mat-card>
