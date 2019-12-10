@@ -1,13 +1,10 @@
 <mat-drawer-container style="background-color: white; ">
-  <mat-drawer class="col-md-3" mode="side" opened style=" position: fixed;  z-index: 1; top: 65px;">
+  <mat-drawer class="col-md-3 fixed-drawer" mode="side" opened >
     <form [formGroup]="form">
-      <mat-form-field class="col-md-12">
+      <mat-form-field class="col-md-12" style="margin-top: 10px">
         <input formControlName="inputNome" (ngModelChange)="filter()"  matInput placeholder="Nome" type="text">
       </mat-form-field>
 
-      <mat-form-field class="col-md-12">
-        <input formControlName="inputOrigem" matInput placeholder="Origem" type="text">
-      </mat-form-field>
 
       <mat-form-field class="col-md-12">
         <mat-select formControlName="inputGrupoTalento" placeholder="Grupo de Talento" (selectionChange)="filter()">
@@ -17,14 +14,22 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field class="col-md-12">
+        <mat-select formControlName="inputOrigem" placeholder="Origem do Talento" (selectionChange)="filter()" >
+          <div *ngFor="let origem of origens">
+            <mat-option [value]="origem.id">{{origem.nome}}</mat-option>
+          </div>
+        </mat-select>
+      </mat-form-field>
+
       <div class="col-md-12">
         <button (click)="irCadastrarTalento()" class="col-md-6" mat-button type="button">Adicionar</button>
-        <button class="col-md-6" mat-button type="button">Limpar</button>
+        <button (click)="limparFormulario()" class="col-md-6" mat-button type="button">Limpar</button>
       </div>
     </form>
   </mat-drawer>
   <mat-drawer-content>
-    <div *ngFor="let talento of talentosFiltrados">
+    <div *ngFor="let talento of talentosFiltrados" style="margin: 10px">
       <app-talento-viewer [talento]="talento"></app-talento-viewer>
     </div>
   </mat-drawer-content>

@@ -8,8 +8,7 @@ const routes: Routes = [
   {path: 'consultar-talento', component: TalentoConsultaComponent},
   {path: 'cadastrar-talento', component: TalentoCadastroComponent},
   {path: 'editar-talento/:id', component: TalentoCadastroComponent},
-  {path: 'vizualizar-talento/:id', component: TalentoCadastroComponent},
-  {path: '', redirectTo: 'consultar-talento', pathMatch: 'full'},
+  {path: '', redirectTo: 'app-home', pathMatch: 'full'},
 
 ];
 

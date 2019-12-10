@@ -1,0 +1,21 @@
+.fixed-toolbar{
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
+.non-selectable{
+  user-select: none; /* Chrome, Opera and Firefox */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  cursor: pointer;
+}
+
+.title-spacer{
+  margin-left: 1%;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}

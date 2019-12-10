@@ -1,6 +1,7 @@
-<mat-toolbar style="position: sticky;
-    position: -webkit-sticky; /* For macOS/iOS Safari */
-    top: 0; /* Sets the sticky toolbar to be on top */
-    z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */" color="primary">
-    <button style="size: 5px" mat-button routerLink="">Ficha Tormenta</button>
+<mat-toolbar class="fixed-toolbar " color="primary">
+  <mat-toolbar-row>
+      <span class="non-selectable title-spacer" routerLink="">Ficha Tormenta</span>
+      <span class="example-spacer"></span>
+      <button mat-button routerLink="consultar-talento">Talento</button>
+  </mat-toolbar-row>
 </mat-toolbar>

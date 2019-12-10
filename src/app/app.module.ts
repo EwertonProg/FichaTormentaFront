@@ -29,6 +29,7 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {WINDOW_PROVIDERS} from "./window.providers";
 import {SampleService} from "./service/sample.service";
 import { TalentoViewerComponent } from './component/talento-viewer/talento-viewer.component';
+import { HomeComponent } from './page/home/home.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { TalentoViewerComponent } from './component/talento-viewer/talento-viewe
     TalentoConsultaComponent,
     TalentoCadastroComponent,
     EditorTextoComponent,
-    TalentoViewerComponent
+    TalentoViewerComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
