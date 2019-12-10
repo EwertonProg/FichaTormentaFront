@@ -28,8 +28,9 @@ export class TalentoConsultaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initializeForm();
+    this.inicializarFormulario();
     this.popularGruposTalento();
+    this.popularOrigens();
     this.service.getAll().subscribe(retorno => {
       this.talentos = retorno;
       this.talentosFiltrados = retorno;
@@ -37,7 +38,6 @@ export class TalentoConsultaComponent implements OnInit {
   }
 
   filter() {
-    debugger;
     this.talentosFiltrados = this.talentos;
     const nome = this.getAtributeValue("inputNome");
     if (!isNull(nome) && nome != "") {
@@ -48,25 +48,22 @@ export class TalentoConsultaComponent implements OnInit {
     if (!isNull(idGrupoTalento) && idGrupoTalento != "") {
       this.talentosFiltrados = this.talentosFiltrados.filter(value => value.grupoTalento.id == idGrupoTalento)
     }
-  }
 
-  irEditarTalento(idTalento: number) {
-    this.router.navigate(["/editar-talento", idTalento]);
+    const idOrigem = this.getAtributeValue("inputOrigem");
+    if (!isNull(idOrigem) && idOrigem != "") {
+      this.talentosFiltrados = this.talentosFiltrados.filter(value => value.origem.id == idOrigem)
+    }
   }
 
   irCadastrarTalento() {
     this.router.navigate(["/cadastrar-talento"]);
   }
 
-  irVizualizarTalento(idTalento: number) {
-    this.router.navigate(["/vizualizar-talento", idTalento]);
-  }
-
   getAtributeValue(atributeValue: string) {
     return isNullOrUndefined(this.form.get(atributeValue)) ? null : this.form.get(atributeValue).value
   }
 
-  private initializeForm() {
+  private inicializarFormulario() {
     this.form = new FormGroup({
       inputNome: new FormControl(''),
       inputOrigem: new FormControl(''),
@@ -74,6 +71,14 @@ export class TalentoConsultaComponent implements OnInit {
     })
   }
 
+  limparFormulario(){
+    this.form.patchValue({
+      inputNome: null,
+      inputOrigem: null,
+      inputGrupoTalento: null,
+    });
+    this.talentosFiltrados = this.talentos;
+  }
 
   private popularOrigens() {
     this.origemService.getAll().subscribe(value => {

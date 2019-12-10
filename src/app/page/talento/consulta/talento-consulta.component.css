@@ -1,3 +1,9 @@
 .text-aling-center{
   text-align: center
 }
+
+.fixed-drawer{
+  position: fixed;
+  z-index: 1;
+  top: 65px;
+}
