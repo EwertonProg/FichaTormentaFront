@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, Inject, OnInit, ViewChild} from "@angular/core";
 import {TalentoService} from "../../../service/talento.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Talento} from "../../../entity/Talento";
@@ -10,6 +10,7 @@ import {EditorTextoComponent} from "../../../component/editor-texto/editor-texto
 import {ActivatedRoute} from "@angular/router";
 import {isNullOrUndefined} from "util";
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'talento-cadastro',
@@ -36,22 +37,30 @@ export class TalentoCadastroComponent implements OnInit {
               private grupoTalentoService: GrupoTalentoService,
               private origemService: OrigemService,
               private router: ActivatedRoute,
-              private dialog: MatSnackBar) {
+              private dialog: MatSnackBar,
+              private dialogRef: MatDialogRef<TalentoCadastroComponent>,
+              @Inject(MAT_DIALOG_DATA)public data) {
   }
 
   ngOnInit(): void {
     this.iniciarFormulario();
     this.popularCombos();
 
-    this.router.params.subscribe(parametros => {
-      if (!isNullOrUndefined(parametros['id'])) {
-        this.service.findById(parametros['id']).subscribe(
-          talentoRetorno => this.carregarTalento(talentoRetorno)
-        );
-        this.edicao = true;
-      }
-    });
-
+    if(!isNullOrUndefined(this.data.id)){
+      this.service.findById(parseInt(this.data.id)).subscribe(
+        talentoRetorno => this.carregarTalento(talentoRetorno)
+      );
+      this.edicao = true;
+    }else {
+      this.router.params.subscribe(parametros => {
+        if (!isNullOrUndefined(parametros['id'])) {
+          this.service.findById(parametros['id']).subscribe(
+            talentoRetorno => this.carregarTalento(talentoRetorno)
+          );
+          this.edicao = true;
+        }
+      });
+    }
   }
 
   salvarTalento() {
@@ -60,9 +69,13 @@ export class TalentoCadastroComponent implements OnInit {
     this.talento.beneficio = this.beneficioTexto.texto;
     this.talento.especial = this.especialTexto.texto;
     this.talento.preRequisito = this.preRequisitoTexto.texto;
-    this.service.save(this.talento).subscribe(value => {
-      this.dialog.open("Talento salvo com sucesso!!", "OK!");
-      this.carregarTalento(value);
+    this.service.save(this.talento).subscribe(talentoRetornado => {
+      this.dialog.open("Talento salvo com sucesso!!", "OK!").onAction().subscribe(value1 => {
+        if(!this.edicao){
+          this.dialogRef.close(talentoRetornado)
+        }
+      });
+      this.carregarTalento(talentoRetornado);
     });
   }
 

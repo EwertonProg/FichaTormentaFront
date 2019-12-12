@@ -1,6 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {Talento} from "../../entity/Talento";
 import {Router} from "@angular/router";
+import {MatDialog, MatDialogConfig} from "@angular/material";
+import {TalentoCadastroComponent} from "../../page/talento/cadastro/talento-cadastro.component";
 
 @Component({
   selector: 'app-talento-viewer',
@@ -11,7 +13,7 @@ export class TalentoViewerComponent implements OnInit {
   @Input()
   talento:Talento;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -41,7 +43,11 @@ export class TalentoViewerComponent implements OnInit {
   }
 
   irEditarTalento() {
-    this.router.navigate(["/editar-talento", this.talento.id]);
+    // this.router.navigate(["/editar-talento", this.talento.id]);
+    const config = new MatDialogConfig();
+    // config.maxHeight  = '80%';
+    config.data =  {id: this.talento.id};
+    this.dialog.open(TalentoCadastroComponent, config);
   }
 
 

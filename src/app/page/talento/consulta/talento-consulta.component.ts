@@ -8,6 +8,8 @@ import {GrupoTalentoService} from "../../../service/grupo_talento.service";
 import {OrigemService} from "../../../service/origem.service";
 import {GrupoTalento} from "../../../entity/GrupoTalento";
 import {Origem} from "../../../entity/Origem";
+import {TalentoCadastroComponent} from "../cadastro/talento-cadastro.component";
+import {MatDialog} from "@angular/material";
 
 @Component({
   selector: 'talento-consulta',
@@ -24,7 +26,8 @@ export class TalentoConsultaComponent implements OnInit {
   constructor(private service: TalentoService,
               private grupoTalentoService: GrupoTalentoService,
               private origemService: OrigemService,
-              private router: Router) {
+              private router: Router,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -37,7 +40,7 @@ export class TalentoConsultaComponent implements OnInit {
     })
   }
 
-  filter() {
+  filtrar() {
     this.talentosFiltrados = this.talentos;
     const nome = this.getAtributeValue("inputNome");
     if (!isNull(nome) && nome != "") {
@@ -56,11 +59,27 @@ export class TalentoConsultaComponent implements OnInit {
   }
 
   irCadastrarTalento() {
-    this.router.navigate(["/cadastrar-talento"]);
+    // this.router.navigate(["/cadastrar-talento"]);
+    const dialogRef = this.dialog.open(TalentoCadastroComponent);
+    dialogRef.afterClosed().subscribe(value => {
+      if (!isNullOrUndefined(value)) {
+        this.talentos.push(value);
+        this.filtrar();
+      }
+    });
   }
 
   getAtributeValue(atributeValue: string) {
     return isNullOrUndefined(this.form.get(atributeValue)) ? null : this.form.get(atributeValue).value
+  }
+
+  limparFormulario() {
+    this.form.patchValue({
+      inputNome: null,
+      inputOrigem: null,
+      inputGrupoTalento: null,
+    });
+    this.talentosFiltrados = this.talentos;
   }
 
   private inicializarFormulario() {
@@ -69,15 +88,6 @@ export class TalentoConsultaComponent implements OnInit {
       inputOrigem: new FormControl(''),
       inputGrupoTalento: new FormControl('')
     })
-  }
-
-  limparFormulario(){
-    this.form.patchValue({
-      inputNome: null,
-      inputOrigem: null,
-      inputGrupoTalento: null,
-    });
-    this.talentosFiltrados = this.talentos;
   }
 
   private popularOrigens() {

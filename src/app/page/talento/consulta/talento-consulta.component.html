@@ -2,12 +2,12 @@
   <mat-drawer class="col-md-3 fixed-drawer" mode="side" opened >
     <form [formGroup]="form">
       <mat-form-field class="col-md-12" style="margin-top: 10px">
-        <input formControlName="inputNome" (ngModelChange)="filter()"  matInput placeholder="Nome" type="text">
+        <input formControlName="inputNome" (ngModelChange)="filtrar()" matInput placeholder="Nome" type="text">
       </mat-form-field>
 
 
       <mat-form-field class="col-md-12">
-        <mat-select formControlName="inputGrupoTalento" placeholder="Grupo de Talento" (selectionChange)="filter()">
+        <mat-select formControlName="inputGrupoTalento" placeholder="Grupo de Talento" (selectionChange)="filtrar()">
           <div *ngFor="let grupo of gruposTalento">
             <mat-option [value]="grupo.id">{{grupo.nome}}</mat-option>
           </div>
@@ -15,7 +15,7 @@
       </mat-form-field>
 
       <mat-form-field class="col-md-12">
-        <mat-select formControlName="inputOrigem" placeholder="Origem do Talento" (selectionChange)="filter()" >
+        <mat-select formControlName="inputOrigem" placeholder="Origem do Talento" (selectionChange)="filtrar()" >
           <div *ngFor="let origem of origens">
             <mat-option [value]="origem.id">{{origem.nome}}</mat-option>
           </div>
